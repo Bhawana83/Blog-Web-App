@@ -1,3 +1,3 @@
 # Blog-Web-App
 Created a basic Blog web app with admin dashboard, where a normal user can create their account and post blog so that others can read, like and comment, also created a admin dashboard where admin can control all the users like create a user, delete, update and so on . Admin can also create a blog and post on the web so that users can read them.
-Happy to see here, you can create your very first blog on our web app
+Happy to see here, you can create your very first blog on our web app and connect to each other.
