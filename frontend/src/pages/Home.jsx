@@ -26,7 +26,6 @@ const Home = () => {
       const params = {};
       if (searchTerm) params.keyword = searchTerm;
       if (category) params.category = category;
-      // ✅ Add author filter
       if (showMyBlogs && currentUser) params.author = "me";
 
       const res = await getAllBlogs(params);
@@ -40,7 +39,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchBlogs();
-  }, [searchTerm, category, showMyBlogs]); // ✅ Re-fetch when toggle changes
+  }, [searchTerm, category, showMyBlogs]);
 
   useEffect(() => {
     localStorage.setItem("showMyBlogs", showMyBlogs.toString());
@@ -54,30 +53,15 @@ const Home = () => {
       return;
     }
 
-    setLoading(true); // Start blog loading
+    setLoading(true);
     fetchBlogs();
   }, [showMyBlogs, currentUser, authLoading]);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* Hero Section */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >  
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Welcome to <span className="text-primary-600">BlogMotion</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover, create, and share amazing stories.
-          </p>
-        </motion.div> */}
-
-        {/* Hero Section with Smoke Background */}
-      <div className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden">
-        {/* Background smoke image */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+        {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -86,39 +70,38 @@ const Home = () => {
             opacity: 0.8,
           }}
         ></div>
-
-        {/* Overlay */}
         <div className="absolute inset-0 bg-white/40"></div>
 
         {/* Hero Content */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9 }}
           className="relative z-10 px-6 max-w-3xl"
         >
-          <h1 className="text-5xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-500 to-indigo-800 bg-clip-text text-transparent drop-shadow-lg">
+          <h1 className=" text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 bg-gradient-to-r from-sky-500 to-indigo-800 bg-clip-text text-transparent drop-shadow-xl text-center">
             Welcome to BlogMotion
           </h1>
-          <p className="text-xl md:text-2xl text-gray-800 mb-8">
+
+          <p className="text-lg md:text-2xl text-gray-800 mb-8">
             Discover, create, and share amazing stories with the world ✨
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            
-            <a
-              href="#blogs"
-              className="px-8 py-4 bg-white/70 backdrop-blur-md text-gray-900 font-semibold rounded-full shadow-lg hover:bg-white transition"
-            >
-              Explore Blogs
-            </a>
-          </div>
+          <a
+            href="#blogs"
+            className="px-8 py-4 bg-white/80 backdrop-blur-md text-gray-900 font-semibold rounded-full shadow-lg hover:bg-white transition"
+          >
+            Explore Blogs
+          </a>
         </motion.div>
-      </div>
-        
-        <div id="blogs"
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
-          {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+      </section>
+
+      {/* Blog Section */}
+      <div
+        id="blogs"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20"
+      >
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
           {currentUser && (
             <Link
               to="/create"
@@ -141,7 +124,6 @@ const Home = () => {
             </Link>
           )}
 
-          {/* ✅ TOGGLE BUTTON FOR MY BLOGS */}
           {currentUser && (
             <Button
               onClick={() => setShowMyBlogs(!showMyBlogs)}
@@ -160,16 +142,17 @@ const Home = () => {
         {/* Search & Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="bg-white p-6 rounded-xl shadow-sm mb-8"
+          className="bg-white p-6 rounded-xl shadow-md mb-10"
         >
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search blogs by title or content..."
+                placeholder="Search blogs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -189,7 +172,7 @@ const Home = () => {
               onClick={() => {
                 setSearchTerm("");
                 setCategory("");
-                setShowMyBlogs(false); // ✅ Reset toggle too
+                setShowMyBlogs(false);
               }}
               className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
             >
@@ -224,7 +207,8 @@ const Home = () => {
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             <AnimatePresence>
@@ -234,10 +218,6 @@ const Home = () => {
             </AnimatePresence>
           </motion.div>
         )}
-
-
-        </div>
-        
       </div>
     </div>
   );
