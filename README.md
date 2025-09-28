@@ -29,11 +29,9 @@ Authentication & Security: JWT, bcrypt
 
 🌱 Future Enhancements
 
-User profiles with editable details.
+More interactive and modern UI/UX
 
-Rich text editor for creating and formatting blogs.
-
-Search and category filters for blogs.
+Shareable Blogs over any platform 
 
 Email notifications for new comments or blog posts.
 
