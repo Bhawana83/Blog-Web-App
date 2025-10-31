@@ -31,6 +31,13 @@ app.get("/", (req, res) => {
   res.send("Blogging API is running...");
 });
 
+app.get('/', (req,res)=>{
+  res.send({
+    activeStatus: true,
+    error: false,
+  })
+})
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/blogs", blogRoutes);
